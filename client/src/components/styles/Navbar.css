@@ -1,0 +1,108 @@
+.full-nav{
+    background-color: rgb(27, 26, 26);
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    position: relative;
+}
+.left-nav{
+    margin: auto 0;
+}
+.right-nav{
+    display: flex;
+    gap: 120px;
+    transition: all 0.4s ;
+}
+.right-nav>ul{
+    display: flex;
+    gap: 20px;
+    margin: auto 0;
+}
+.right-nav>ul>a{
+    color: white;
+    text-decoration: none;
+    list-style: none;
+    user-select: none;
+}
+.right-nav>ul>a:hover{
+    color: rgb(205, 200, 200);
+}
+.btns{
+    display: flex;
+    gap: 20px;
+}
+.l-btn{
+    background-color: rgb(34, 34, 65);
+    padding: 10px 20px;
+    border-radius: 10px;
+    user-select: none;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.244);
+}
+.r-btn{
+    background-color: rgb(34, 34, 65);
+    padding: 10px 20px;
+    border-radius: 10px;
+    user-select: none;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.244);
+}
+.l-btn:hover{
+    background-color: rgb(18, 18, 48);
+}
+.r-btn:hover{
+    background-color: rgb(18, 18, 48);
+}
+.bgr{
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+}
+.line{
+    background-color: white;
+    height: 3px;
+    width: 30px;
+}
+@media screen and (max-width: 1000px) {
+    .bgr{
+        display: flex;
+    }
+    .full-nav{
+        flex-direction: column;
+    }
+    .right-nav{
+        position: fixed;
+        top: 57px;
+        left: -100%;
+        background-color: rgba(0, 0, 0, 0.944);
+        height: 100%;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        margin: 0 0;
+        padding: 60px 40px;
+        gap: 50px;
+    }
+    .right-nav>ul{
+        margin: 0 0;
+        flex-direction: column;
+        gap: 50px;
+    }
+    .btns{
+        margin: 0 0;
+        flex-direction: column;
+    }
+    .l-btn{
+        text-align: center;
+        width: fit-content;
+    }
+    .r-btn{
+        text-align: center;
+        width: fit-content;
+    }
+}
