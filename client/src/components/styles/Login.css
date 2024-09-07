@@ -1,24 +1,24 @@
-.full-register{
+.full-login{
     height: calc(100vh - 70px);
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.register-card{
+.login-card{
     background-color: rgb(180, 174, 174);
     color: black;
     width: 50%;
     border-radius: 20px;
 }
 
-.l-cards{
+.l-card{
     display: flex;
     padding: 40px 20px;
     width: 100%;
     height: 100%;
 }
-.lr-card{
+.ll-card{
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -29,27 +29,27 @@
     color: white;
     padding: 20px;
 }
-.lr-card>div{
+.ll-card>div{
     font-size: 2.5rem;
     font-weight: 600;
     text-transform: capitalize;
 }
-.rr-card{
+.rl-card{
     width: 50%;
     margin: 0 auto;
 }
-.rr-card>form{
+.rl-card>form{
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-.rr-card>form>input{
+.rl-card>form>input{
     padding: 7px 10px;
     border-radius: 10px;
     outline: none;
     border: none;
 }
-.rr-card>form>input:last-child{
+.rl-card>form>input:last-child{
     background-color: rgb(29, 153, 29);
     color: white;
     width: fit-content;
@@ -58,30 +58,30 @@
     cursor: pointer;
     font-weight: 550;
 }
-.rr-card>form>input:last-child:hover{
+.rl-card>form>input:last-child:hover{
     background-color: rgb(25, 107, 25);
 }
 
 @media screen and (max-width: 1300px) {
    
-    .register-card{
+    .login-card{
         margin-top: 20px;
         width: 90%;
         height: fit-content
     }
-    .l-cards{
+    .l-card{
         flex-direction: column;
         gap: 30px;
     }
-    .lr-card{
+    .ll-card{
         width: 95%;
         margin: 0 auto;
         padding: 15px;
     }
-    .rr-card{
+    .rl-card{
         width: 90%;
     }
-    .lr-card>div{
+    .ll-card>div{
         font-size: 1.5rem;
         font-weight: 500;
     }

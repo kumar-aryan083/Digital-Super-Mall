@@ -1,9 +1,10 @@
 import React from 'react';
+import Login from '../components/Login';
 
-const AdminLogin = () => {
+const AdminLogin = ({onLogin, handleAlert}) => {
   return (
     <>
-      Admin login page
+      <Login role='admin' onLogin={onLogin} handleAlert={handleAlert} />
     </>
   );
 }

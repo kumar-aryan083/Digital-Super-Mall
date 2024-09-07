@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './styles/Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const Navbar = () => {
+const Navbar = ({ user, onLogout, alert, handleAlert }) => {
   const nav = useNavigate();
+  const notify = () => toast(alert);
 
-  const handleBgr = ()=>{
-    if(document.querySelector('.right-nav').style.left === "-100%"){
+  const handleBgr = () => {
+    if (document.querySelector('.right-nav').style.left === "-100%") {
       document.querySelector('.right-nav').style.left = "0"
-    }else{
+    } else {
       document.querySelector('.right-nav').style.left = "-100%"
     }
   }
+
+  useEffect(()=>{
+    if(alert){
+      notify(alert);
+    }
+  },[alert])
 
   return (
     <>
@@ -22,15 +31,38 @@ const Navbar = () => {
           </div>
           <div className="right-nav">
             <ul>
-              <Link to='/'><li>Home</li></Link>
-              <Link to='/about'><li>About</li></Link>
-              <Link to='/shops'><li>Shops</li></Link>
-              <Link to='/products'><li>Products</li></Link>
-              <Link to='/contact'><li>Contact us</li></Link>
+              <Link to='/' onClick={handleBgr}><li>Home</li></Link>
+              <Link to='/about' onClick={handleBgr}><li>About</li></Link>
+              <Link to='/shops' onClick={handleBgr}><li>Shops</li></Link>
+              <Link to='/products' onClick={handleBgr}><li>Products</li></Link>
+              <Link to='/contact' onClick={handleBgr}><li>Contact us</li></Link>
             </ul>
             <div className="btns">
-              <div className="l-btn" onClick={()=>{nav('/user/login')}}>Login</div>
-              <div className="r-btn" onClick={()=>{nav('/user/register')}}>Register</div>
+              {user &&
+                <>
+                  <div className="l-btn" onClick={() => { 
+                    handleAlert("Clicked on profile");
+                   }}>Profile</div>
+                  <div className="r-btn" onClick={() => {
+                    localStorage.removeItem('user');
+                    onLogout();
+                    handleAlert("Logged out Successfully");
+                    document.querySelector('.right-nav').style.left = "-100%";
+                  }}>Logout</div>
+                </>
+              }
+              {!user &&
+                <>
+                  <div className="l-btn" onClick={() => {
+                    nav('/user/login');
+                    document.querySelector('.right-nav').style.left = "-100%"
+                    }}>Login</div>
+                  <div className="r-btn" onClick={() => { 
+                    nav('/user/register');
+                    document.querySelector('.right-nav').style.left = "-100%"
+                  }}>Register</div>
+                </>
+              }
             </div>
           </div>
           <div className="bgr" onClick={handleBgr}>
@@ -40,6 +72,18 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import Register from '../components/Register';
 
-const UserRegister = () => {
+const UserRegister = ({handleAlert}) => {
   return (
     <>
-      <Register role="User" />
+      <Register role="user" handleAlert={handleAlert} />
     </>
   );
 }
