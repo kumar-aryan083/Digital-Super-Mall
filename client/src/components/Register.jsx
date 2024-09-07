@@ -13,6 +13,8 @@ const Register = ({role, handleAlert}) => {
         password: "",
         cnfPassword: ""
     });
+    const [otp, setOtp] = useState("");
+    const [id, setId] = useState("");
 
     const handleChange = (e)=>{
         setFormData({
@@ -26,15 +28,36 @@ const Register = ({role, handleAlert}) => {
         try {
             if(formData.password === formData.cnfPassword){
                 const res = await axios.post(`http://localhost:9000/api/${role}/register`, {...formData});
-                // console.log(res.data);
-                handleAlert(res.data.message);
-                nav(`/${role}/login`);
+                console.log(res.data);
+                if(role === 'admin'){
+                    setId(res.data.data._id)
+                    handleAlert('OTP sent to email');
+                    document.querySelector('.otp-popup').style.display = 'flex';
+                }else{
+                    handleAlert(res.data.message);
+                    nav('/user/login')
+                }
             }else{
                 handleAlert("Password doesn't match");
             }
         } catch (error) {
             console.error("Error: ", error);
-            handleAlert("Error occured while registering")
+            handleAlert("Admin already exists.")
+        }
+    }
+
+    const handleOtpChange = (e)=>{
+        setOtp(e.target.value);
+    }
+    
+    const handleOtpSubmit = async(e)=>{
+        e.preventDefault();
+        const res = await  axios.post(`http://localhost:9000/api/admin/verify-otp/${id}`, {otp});
+        if(res.data.success){
+            handleAlert(res.data.message);
+            nav('/admin/login');
+        }else{
+            handleAlert(res.data.message);
         }
     }
 
@@ -60,6 +83,15 @@ const Register = ({role, handleAlert}) => {
                                 <input type="submit" value='Register' />
                             </form>
                         </div>
+                    </div>
+                </div>
+                <div className="otp-popup">
+                    <div className="op-card">
+                        <h2>Enter OTP: </h2>
+                        <form onSubmit={handleOtpSubmit}>
+                            <input type="text" name="otp" placeholder='Enter otp here' value={otp} onChange={handleOtpChange}  />
+                            <input type="submit" value='Submit OTP' />
+                        </form>
                     </div>
                 </div>
             </div>
