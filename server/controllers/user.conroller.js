@@ -12,7 +12,7 @@ export const userRegister = async(req, res)=>{
             ]
         });
         if (existingUser) {
-            res.status(400).json({
+            res.json({
                 success: false,
                 message: "User already exists."
             })
@@ -22,13 +22,13 @@ export const userRegister = async(req, res)=>{
             const newUser = new userModel({ ...others, password: hashedPassword });
             await newUser.save();
             if (newUser) {
-                res.status(200).json({
+                res.json({
                     success: true,
                     message: "User created successfully",
                     data: newUser._doc
                 });
             } else {
-                res.status(404).json({
+                res.json({
                     success: false,
                     message: "User not created in db"
                 })
@@ -48,7 +48,7 @@ export const userLogin = async(req, res) =>{
             ]
         });
         if(!user){
-            res.status(404).json({
+            res.json({
                 success: false,
                 message: "User with this credentials doesn't exists."
             })
@@ -63,14 +63,14 @@ export const userLogin = async(req, res) =>{
                     sameSite: 'Lax',
                     maxAge: 7 * 24 * 60 * 60 * 1000,
                     secure: process.env.NODE_ENV === 'production'
-                }).status(200).json({
+                }).json({
                     success: true,
                     message: "Logged in successfully.",
                     data: others,
                     token
                 });
             }else{
-                res.status(401).json({
+                res.json({
                     success: false,
                     message: "Incorrect password."
                 })

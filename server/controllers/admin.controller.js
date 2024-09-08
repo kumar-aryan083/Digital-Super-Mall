@@ -1,4 +1,5 @@
 import adminModel from "../models/admin.model.js";
+import shopModel from "../models/shop.model.js";
 import { comparePassword, hashPassword } from "../utils/hashing.js";
 import { generateToken } from "../utils/tokenization.js";
 import nodemailer from 'nodemailer';
@@ -13,7 +14,7 @@ export const adminRegister = async (req, res) => {
             ]
         });
         if (existingAdmin) {
-            res.status(400).json({
+            res.json({
                 success: false,
                 message: "Admin already exists."
             })
@@ -74,13 +75,13 @@ export const adminRegister = async (req, res) => {
             const newAdmin = new adminModel({ ...others, password: hashedPassword, otp });
             await newAdmin.save();
             if (newAdmin) {
-                res.status(200).json({
+                res.json({
                     success: true,
-                    message: "Admin created successfully",
+                    message: "OTP sent to email",
                     data: newAdmin._doc
                 });
             } else {
-                res.status(403).json({
+                res.json({
                     success: false,
                     message: "Admin not created in db"
                 })
@@ -100,29 +101,36 @@ export const adminLogin = async(req, res) => {
             ]
         });
         if(!admin){
-            res.status(404).json({
+            res.json({
                 success: false,
                 message: "Admin with this credentials doesn't exists."
             })
         }else{
             // password validation
             if(comparePassword(req.body.password, admin.password)){
-                // tokenization
-                const token = generateToken(admin._id);
-                const {password, ...others} = admin._doc;
-                res.cookie('token', token, {
-                    httpOnly: true,
-                    sameSite: 'Lax',
-                    maxAge: 7 * 24 * 60 * 60 * 1000,
-                    secure: process.env.NODE_ENV === 'production'
-                }).status(200).json({
-                    success: true,
-                    message: "Logged in successfully.",
-                    data: others,
-                    token
-                });
+                if(admin.verified){
+                    // tokenization
+                    const token = generateToken(admin._id);
+                    const {password, ...others} = admin._doc;
+                    res.cookie('token', token, {
+                        httpOnly: true,
+                        sameSite: 'Lax',
+                        secure: process.env.NODE_ENV === 'production',
+                        maxAge: 7 * 24 * 60 * 60 * 1000
+                    }).json({
+                        success: true,
+                        message: "Logged in successfully.",
+                        data: others,
+                        token
+                    });
+                }else{
+                    res.json({
+                        success: false,
+                        message: "Email is not verified."
+                    });
+                }
             }else{
-                res.status(401).json({
+                res.json({
                     success: false,
                     message: "Incorrect password."
                 })
@@ -139,23 +147,53 @@ export const verifyOtp = async(req, res)=>{
             if(admin.otp === req.body.otp){
                 admin.verified = true;
                 await admin.save();
-                res.status(200).json({
+                res.json({
                     success: true,
                     message: 'Email Verified successfully.'
                 })
             }else{
-                res.status(401).json({
+                res.json({
                     success: false,
                     message: "Invalid OTP"
                 })
             }
         }else{
-            res.status(404).json({
+            res.json({
                 success: false,
                 message: "Admin couldn't created."
             })
         }
     } catch (error) {
         console.error("Error: ",error);
+    }
+}
+export const createShop = async(req, res)=>{
+    try {
+        const shop = await shopModel.findOne({name: req.body.name});
+        if(shop){
+            res.json({
+                success: false,
+                message: 'Shop with this name already exists.'
+            })
+        }else{
+            const newShop = new shopModel({...req.body, adminId: req.user.id});
+            await newShop.save();
+            if(newShop){
+                const admin = await adminModel.findById(req.user.id);
+                admin.shopIds.push(newShop._id);
+                await admin.save();
+                res.json({
+                    success: true,
+                    message: "New shop created."
+                })
+            }else{
+                res.json({
+                    success: false,
+                    message: 'Unable to create shop'
+                })
+            }
+        }
+    } catch (error) {
+        console.error(error);
     }
 }

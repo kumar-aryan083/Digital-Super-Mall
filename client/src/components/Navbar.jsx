@@ -3,6 +3,7 @@ import './styles/Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 const Navbar = ({ user, onLogout, alert, handleAlert }) => {
   const nav = useNavigate();
@@ -43,10 +44,13 @@ const Navbar = ({ user, onLogout, alert, handleAlert }) => {
                   <div className="l-btn" onClick={() => { 
                     handleAlert("Clicked on profile");
                    }}>Profile</div>
-                  <div className="r-btn" onClick={() => {
-                    localStorage.removeItem('user');
-                    onLogout();
-                    handleAlert("Logged out Successfully");
+                  <div className="r-btn" onClick={async() => {
+                    const res = await axios.post('http://localhost:9000/api/common/logout',{},{withCredentials: true});
+                    if(res.data.success){
+                      localStorage.removeItem('user');
+                      onLogout();
+                      handleAlert(res.data.message);
+                    } 
                     document.querySelector('.right-nav').style.left = "-100%";
                   }}>Logout</div>
                 </>

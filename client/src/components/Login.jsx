@@ -22,13 +22,16 @@ const Login = ({role, onLogin, handleAlert}) => {
         try {
             const res = await axios.post(`http://localhost:9000/api/${role}/login`, {...formData},{withCredentials: true});
             console.log(res.data);
-            localStorage.setItem('user', JSON.stringify(res.data.data));
-            onLogin();
-            handleAlert(res.data.message);
-            nav('/');
+            if(res.data.success){
+                localStorage.setItem('user', JSON.stringify(res.data.data));
+                onLogin();
+                handleAlert(res.data.message);
+                nav('/');
+            }else{
+                handleAlert(res.data.message);
+            }
         } catch (error) {
             console.log("Login error: ", error);
-            handleAlert("Invalid credentials");
         }
     }
 

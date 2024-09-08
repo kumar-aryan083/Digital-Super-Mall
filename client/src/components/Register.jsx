@@ -28,21 +28,24 @@ const Register = ({role, handleAlert}) => {
         try {
             if(formData.password === formData.cnfPassword){
                 const res = await axios.post(`http://localhost:9000/api/${role}/register`, {...formData});
-                console.log(res.data);
-                if(role === 'admin'){
-                    setId(res.data.data._id)
-                    handleAlert('OTP sent to email');
-                    document.querySelector('.otp-popup').style.display = 'flex';
+                // console.log(res.data);
+                if(res.data.success){
+                    if(role === 'admin'){
+                        setId(res.data.data._id)
+                        handleAlert(res.data.message);
+                        document.querySelector('.otp-popup').style.display = 'flex';
+                    }else{
+                        handleAlert(res.data.message);
+                        nav('/user/login')
+                    }
                 }else{
                     handleAlert(res.data.message);
-                    nav('/user/login')
                 }
             }else{
                 handleAlert("Password doesn't match");
             }
         } catch (error) {
             console.error("Error: ", error);
-            handleAlert("Admin already exists.")
         }
     }
 

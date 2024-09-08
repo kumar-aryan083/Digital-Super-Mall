@@ -28,7 +28,11 @@ const adminSchema = mongoose.Schema({
     verified: {
         type: Boolean,
         default: false
-    }
+    },
+    shopIds: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Shop'
+    }]
 });
 
 export default mongoose.model('Admin', adminSchema);
