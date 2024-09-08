@@ -1,10 +1,10 @@
 import React from 'react';
 import Login from '../components/Login';
 
-const UserLogin = ({onLogin, handleAlert}) => {
+const UserLogin = ({onLogin, handleAlert, user}) => {
   return (
     <>
-      <Login role="user" onLogin={onLogin} handleAlert={handleAlert} />
+      <Login role="user" onLogin={onLogin} handleAlert={handleAlert} user={user} />
     </>
   );
 }

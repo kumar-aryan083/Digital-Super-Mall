@@ -38,10 +38,10 @@ const App = () => {
           <Route path='/Shops' element={<Shops />} />
           <Route path='/products' element={<Products />} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/admin/register' element={<AdminRegister handleAlert={settingAlert} />} />
-          <Route path='/admin/login' element={<AdminLogin onLogin={settingUser} handleAlert={settingAlert} />} />
-          <Route path='/user/register' element={<UserRegister handleAlert={settingAlert} />} />
-          <Route path='/user/login' element={<UserLogin handleAlert={settingAlert} onLogin={settingUser}/>} />
+          <Route path='/admin/register' element={<AdminRegister handleAlert={settingAlert} user={user} />} />
+          <Route path='/admin/login' element={<AdminLogin onLogin={settingUser} handleAlert={settingAlert} user={user} />} />
+          <Route path='/user/register' element={<UserRegister handleAlert={settingAlert} user={user} />} />
+          <Route path='/user/login' element={<UserLogin handleAlert={settingAlert} onLogin={settingUser} user={user}/>} />
         </Routes>
       </div>
     </>

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/Login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({role, onLogin, handleAlert}) => {
+const Login = ({role, onLogin, handleAlert, user}) => {
     const nav = useNavigate();
     const [formData, setFormData] = useState({
         id: "",
@@ -34,6 +34,13 @@ const Login = ({role, onLogin, handleAlert}) => {
             console.log("Login error: ", error);
         }
     }
+
+    useEffect(()=>{
+        document.title = 'Super Mall | Login';
+        if(user){
+            nav('/')
+        }
+    },[user])
 
     return (
         <>

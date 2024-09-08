@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/Register.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Register = ({role, handleAlert}) => {
+const Register = ({role, handleAlert, user}) => {
     const nav = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
@@ -22,6 +22,13 @@ const Register = ({role, handleAlert}) => {
             [e.target.name]: e.target.value
         });
     }
+
+    useEffect(()=>{
+        document.title = 'Super Mall | Register';
+        if(user){
+            nav('/');
+        }
+    },[user]);
 
     const handleSubmit = async(e)=>{
         e.preventDefault();
