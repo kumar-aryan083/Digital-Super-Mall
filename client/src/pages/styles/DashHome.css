@@ -1,0 +1,54 @@
+.full-dh {
+    display: flex;
+}
+
+.dh-remain {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%; 
+}
+.u-dash{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 50px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.236);
+}
+.u-dash>h1{
+    font-size: 3rem;
+}
+.l-dash{
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+}
+.ll-dash{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 50%;
+    gap: 20px;
+    color: black;
+}
+
+.d-card{
+    width: 40%;
+    text-align: center;
+    background-color: rgb(210, 196, 196);
+    padding: 40px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1.5rem;
+}
+
+.lr-dash{
+    width: 50%;
+}
+.img-ctrl{
+    width: 100%;
+}

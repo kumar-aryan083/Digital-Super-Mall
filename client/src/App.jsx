@@ -10,6 +10,7 @@ import AdminRegister from './pages/AdminRegister';
 import AdminLogin from './pages/AdminLogin';
 import UserRegister from './pages/UserRegister';
 import UserLogin from './pages/UserLogin';
+import DashHome from './pages/DashHome';
 
 const App = () => {
   const [user, setUser] = useState(()=>{
@@ -42,6 +43,9 @@ const App = () => {
           <Route path='/admin/login' element={<AdminLogin onLogin={settingUser} handleAlert={settingAlert} user={user} />} />
           <Route path='/user/register' element={<UserRegister handleAlert={settingAlert} user={user} />} />
           <Route path='/user/login' element={<UserLogin handleAlert={settingAlert} onLogin={settingUser} user={user}/>} />
+          <Route path='/admin/dashboard' element={<DashHome />} />
+          <Route path='/admin/dashboard/shops' element={<Shops />} />
+          <Route path='/admin/dashboard/products' element={<Products />} />
         </Routes>
       </div>
     </>

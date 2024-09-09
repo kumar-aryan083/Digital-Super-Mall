@@ -10,6 +10,10 @@ const shopSchema = mongoose.Schema({
         required: true,
         unique: true
     },
+    shopDesc: {
+        type: String,
+        required: true
+    },
     floor: {
         type: Number,
         required: true

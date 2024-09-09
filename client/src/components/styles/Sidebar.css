@@ -1,0 +1,22 @@
+.full-sidebar{
+    background-color: rgb(110, 108, 108);
+    width: 20%;
+    height: calc(100vh - 70px);
+}
+.full-sidebar>ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    /* gap: 30px; */
+    text-align: center;
+}
+.full-sidebar>ul>a{
+    padding: 20px;
+    border-bottom: 1px solid black;
+    user-select: none;
+    color: white;
+    text-decoration: none;
+}
+.full-sidebar>ul>a:hover{
+    background-color: rgb(76, 75, 75);
+}
