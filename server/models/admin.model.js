@@ -32,6 +32,10 @@ const adminSchema = mongoose.Schema({
     shopIds: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Shop'
+    }],
+    productIds: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
     }]
 });
 

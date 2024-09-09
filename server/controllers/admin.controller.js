@@ -1,4 +1,5 @@
 import adminModel from "../models/admin.model.js";
+import productModel from "../models/product.model.js";
 import shopModel from "../models/shop.model.js";
 import { comparePassword, hashPassword } from "../utils/hashing.js";
 import { generateToken } from "../utils/tokenization.js";
@@ -21,7 +22,7 @@ export const adminRegister = async (req, res) => {
         } else {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ012345689abcdefghijklmnopqrstuvwxyz';
             let otp = "";
-            for(let i=0; i<6; i++){
+            for (let i = 0; i < 6; i++) {
                 const randomIdx = Math.floor(Math.random() * characters.length);
                 otp += characters[randomIdx];
             }
@@ -91,27 +92,27 @@ export const adminRegister = async (req, res) => {
         console.log(error);
     }
 }
-export const adminLogin = async(req, res) => {
+export const adminLogin = async (req, res) => {
     try {
         const admin = await adminModel.findOne({
             $or: [
-                {username: req.body.id},
-                {email: req.body.id},
-                {phone: req.body.id}
+                { username: req.body.id },
+                { email: req.body.id },
+                { phone: req.body.id }
             ]
         });
-        if(!admin){
+        if (!admin) {
             res.json({
                 success: false,
                 message: "Admin with this credentials doesn't exists."
             })
-        }else{
+        } else {
             // password validation
-            if(comparePassword(req.body.password, admin.password)){
-                if(admin.verified){
+            if (comparePassword(req.body.password, admin.password)) {
+                if (admin.verified) {
                     // tokenization
                     const token = generateToken(admin._id);
-                    const {password, ...others} = admin._doc;
+                    const { password, ...others } = admin._doc;
                     res.cookie('token', token, {
                         httpOnly: true,
                         sameSite: 'Lax',
@@ -123,13 +124,13 @@ export const adminLogin = async(req, res) => {
                         data: others,
                         token
                     });
-                }else{
+                } else {
                     res.json({
                         success: false,
                         message: "Email is not verified."
                     });
                 }
-            }else{
+            } else {
                 res.json({
                     success: false,
                     message: "Incorrect password."
@@ -140,45 +141,45 @@ export const adminLogin = async(req, res) => {
         console.log(error);
     }
 }
-export const verifyOtp = async(req, res)=>{
+export const verifyOtp = async (req, res) => {
     try {
-        const admin = await adminModel.findOne({_id: req.params.id});
-        if(admin){
-            if(admin.otp === req.body.otp){
+        const admin = await adminModel.findOne({ _id: req.params.id });
+        if (admin) {
+            if (admin.otp === req.body.otp) {
                 admin.verified = true;
                 await admin.save();
                 res.json({
                     success: true,
                     message: 'Email Verified successfully.'
                 })
-            }else{
+            } else {
                 res.json({
                     success: false,
                     message: "Invalid OTP"
                 })
             }
-        }else{
+        } else {
             res.json({
                 success: false,
                 message: "Admin couldn't created."
             })
         }
     } catch (error) {
-        console.error("Error: ",error);
+        console.error("Error: ", error);
     }
 }
-export const createShop = async(req, res)=>{
+export const createShop = async (req, res) => {
     try {
-        const shop = await shopModel.findOne({name: req.body.name});
-        if(shop){
+        const shop = await shopModel.findOne({ name: req.body.name });
+        if (shop) {
             res.json({
                 success: false,
                 message: 'Shop with this name already exists.'
             })
-        }else{
-            const newShop = new shopModel({...req.body, adminId: req.user.id});
+        } else {
+            const newShop = new shopModel({ ...req.body, adminId: req.user.id });
             await newShop.save();
-            if(newShop){
+            if (newShop) {
                 const admin = await adminModel.findById(req.user.id);
                 admin.shopIds.push(newShop._id);
                 await admin.save();
@@ -186,13 +187,67 @@ export const createShop = async(req, res)=>{
                     success: true,
                     message: "New shop created."
                 })
-            }else{
+            } else {
                 res.json({
                     success: false,
                     message: 'Unable to create shop'
                 })
             }
         }
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const createProduct = async (req, res) => {
+    try {
+        // find the shop from shop id
+        const shop = await shopModel.findById(req.body.shopId).populate('products');
+        if (!shop) {
+            return res.json({
+                success: false,
+                message: 'Product can only be created in a shop.'
+            })
+        }
+        // find if the product is already present in the shop
+        const existingProduct = shop.products.find(product => product.productName === req.body.productName);
+        if (existingProduct) {
+            return res.json({
+                success: false,
+                message: 'Product with this name already exists in the shop.'
+            })
+        }
+        // create a new product if it's not present in the shop
+        const newProduct = new productModel({ ...req.body, adminId: req.user.id });
+        await newProduct.save();
+
+        if (newProduct) {
+            // push this product to the shop model
+            shop.products.push(newProduct._id);
+            await shop.save();
+
+            //push this products to admin model
+            const admin = await adminModel.findById(req.user.id);
+            if (!admin) {
+                return res.json({
+                    success: false,
+                    message: 'Admin not found'
+                })
+            }
+            admin.productIds.push(newProduct._id);
+            await admin.save();
+
+            return res.json({
+                success: true,
+                message: 'New Product added to the shop.',
+                newProduct
+            })
+        } else {
+            return res.json({
+                success: false,
+                message: 'Unable to create new product.'
+            })
+        }
+
     } catch (error) {
         console.error(error);
     }
