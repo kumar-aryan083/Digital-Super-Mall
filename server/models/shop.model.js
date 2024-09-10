@@ -5,7 +5,7 @@ const shopSchema = mongoose.Schema({
         type: Number,
         unique: true
     },
-    name: {
+    shopName: {
         type: String,
         required: true,
         unique: true
@@ -14,8 +14,12 @@ const shopSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        type: String,
+        required: true
+    },
     floor: {
-        type: Number,
+        type: String,
         required: true
     },
     products: [{

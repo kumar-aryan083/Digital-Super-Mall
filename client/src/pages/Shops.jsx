@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { checkAdmin } from '../utils/setValues';
 
 const Shops = () => {
-
   const nav = useNavigate();
 
   useEffect(()=>{

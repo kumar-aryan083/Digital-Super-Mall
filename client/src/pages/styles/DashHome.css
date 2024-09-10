@@ -1,12 +1,12 @@
 .full-dh {
-    display: flex;
+    display: flex;  
 }
 
 .dh-remain {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 100%; 
+    width: 100%;
 }
 .u-dash{
     display: flex;
@@ -21,8 +21,7 @@
 }
 .l-dash{
     display: flex;
-    gap: 20px;
-    padding: 20px 0;
+    gap: 40px;
 }
 .ll-dash{
     display: flex;
@@ -31,6 +30,7 @@
     width: 50%;
     gap: 20px;
     color: black;
+    padding: 40px 0;
 }
 
 .d-card{
@@ -47,8 +47,105 @@
 }
 
 .lr-dash{
-    width: 50%;
+    width: 40%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
 }
 .img-ctrl{
+    width: 80%;
+    height: 70%;
+}
+.img-ctrl>img{
     width: 100%;
+    height: 100%;
+}
+.d-btns{
+    padding-top: 20px;
+    display: flex;
+    margin: 0 auto;
+    width: 100%;
+    gap: 50px;
+    padding-left: 60px;
+}
+
+.as-btn{
+    padding: 10px 20px;
+    background-color: green;
+    border-radius: 10px;
+    user-select: none;
+    cursor: pointer;
+}
+.ap-btn{
+    padding: 10px 20px;
+    background-color: blue;
+    border-radius: 10px;
+    user-select: none;
+    cursor: pointer;
+}
+.as-popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.671);
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.as-popup-card{
+    background-color: rgb(197, 194, 194);
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+.as-popup-card>h2{
+    color: black;
+    text-align: center;
+}
+.as-popup-card>form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.as-popup-card>form>input{
+    padding: 10px 20px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+.as-popup-card>form>select{
+    padding: 10px 20px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+.as-popup-card>form>textarea{
+    outline: none;
+    padding: 10px;
+    resize: none;
+    border: none;
+}
+.as-popup-card>form>input:last-child{
+    background-color: rgb(2, 181, 2);
+    color: white;
+    font-weight: 550;
+    cursor: pointer;
+}
+.as-popup-card>form>input:last-child:hover{
+    background-color: rgb(7, 140, 7);
+}
+.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 8px;
+    background-color: red;
+    border-radius: 50%;
+    user-select: none;
+    cursor: pointer;
 }

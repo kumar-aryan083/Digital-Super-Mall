@@ -170,7 +170,8 @@ export const verifyOtp = async (req, res) => {
 }
 export const createShop = async (req, res) => {
     try {
-        const shop = await shopModel.findOne({ name: req.body.name });
+        // console.log(req.body);
+        const shop = await shopModel.findOne({ shopName: req.body.shopName });
         if (shop) {
             res.json({
                 success: false,
