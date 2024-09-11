@@ -87,6 +87,7 @@ const DashHome = ({handleAlert}) => {
           </div>
         </div>
       </div>
+      
       <div className="as-popup">
         <div className="as-popup-card">
           <h2>Add New Shop</h2>
