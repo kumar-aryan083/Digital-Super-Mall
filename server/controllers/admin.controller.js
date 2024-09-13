@@ -261,7 +261,7 @@ export const updateShop = async(req, res)=>{
 export const createProduct = async (req, res) => {
     try {
         // find the shop from shop id
-        const shop = await shopModel.findById(req.body.shopId).populate('products');
+        const shop = await shopModel.findById(req.params.sId).populate('products');
         if (!shop) {
             return res.json({
                 success: false,
@@ -277,24 +277,13 @@ export const createProduct = async (req, res) => {
             })
         }
         // create a new product if it's not present in the shop
-        const newProduct = new productModel({ ...req.body, adminId: req.user.id });
+        const newProduct = new productModel({ ...req.body, adminId: req.user.id, shopId: req.params.sId });
         await newProduct.save();
 
         if (newProduct) {
             // push this product to the shop model
             shop.products.push(newProduct._id);
             await shop.save();
-
-            //push this products to admin model
-            const admin = await adminModel.findById(req.user.id);
-            if (!admin) {
-                return res.json({
-                    success: false,
-                    message: 'Admin not found'
-                })
-            }
-            admin.productIds.push(newProduct._id);
-            await admin.save();
 
             return res.json({
                 success: true,

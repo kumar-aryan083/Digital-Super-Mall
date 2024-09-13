@@ -5,7 +5,6 @@ import env from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import adminRouter from './routers/admin.router.js'
-import userRouter from './routers/user.router.js'
 import commonRouter from './routers/common.router.js'
 
 env.config();
@@ -28,7 +27,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsAllow));
 app.use('/api/admin', adminRouter);
-app.use('/api/user', userRouter);
 app.use('/api/common', commonRouter);
 
 app.get('/', (req, res)=>{

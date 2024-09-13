@@ -10,7 +10,7 @@ router.post('/verify-otp/:id', verifyOtp);
 router.post('/create-shop',verifyToken, createShop);
 router.get('/all-shops',verifyToken, allShops);
 router.delete('/delete-shop/:sId',verifyToken, deleteShop);
-router.post('/update-shop',verifyToken, updateShop);
-router.post('/create-product',verifyToken, createProduct);
+router.put('/update-shop',verifyToken, updateShop);
+router.post('/create-product/:sId',verifyToken, createProduct);
 
 export default router;

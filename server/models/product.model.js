@@ -25,10 +25,13 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    shopId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Shop'
+    },
     adminId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Admin',
-        unique: true
+        ref: 'Admin'
     }
 });
 

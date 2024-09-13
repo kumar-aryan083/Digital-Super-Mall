@@ -184,3 +184,10 @@ th, td{
     color: black;
     border-radius: 10px;
 }
+.showUploading{
+    display: none;
+}
+.showUploaded{
+    display: none;
+    padding: 5px;
+}
