@@ -41,11 +41,11 @@ const App = () => {
           <Route path='/contact' element={<Contact />} />
           <Route path='/admin/register' element={<AdminRegister handleAlert={settingAlert} user={user} />} />
           <Route path='/admin/login' element={<AdminLogin onLogin={settingUser} handleAlert={settingAlert} user={user} />} />
-          <Route path='/user/register' element={<UserRegister handleAlert={settingAlert} user={user} />} />
-          <Route path='/user/login' element={<UserLogin handleAlert={settingAlert} onLogin={settingUser} user={user}/>} />
-          <Route path='/admin/dashboard' element={<DashHome handleAlert={settingAlert}/>} />
-          <Route path='/admin/dashboard/shops' element={<Shops />} />
-          <Route path='/admin/dashboard/products' element={<Products />} />
+          {/* <Route path='/user/register' element={<UserRegister handleAlert={settingAlert} user={user} />} />
+          <Route path='/user/login' element={<UserLogin handleAlert={settingAlert} onLogin={settingUser} user={user}/>} /> */}
+          <Route path='/admin/dashboard' element={<DashHome handleAlert={settingAlert} user={user} />} />
+          <Route path='/admin/dashboard/shops' element={<Shops user={user} handleAlert={settingAlert} />} />
+          <Route path='/admin/dashboard/products' element={<Products user={user} />} />
         </Routes>
       </div>
     </>

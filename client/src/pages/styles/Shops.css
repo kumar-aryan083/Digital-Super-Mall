@@ -1,0 +1,65 @@
+.full-shops{
+    display: flex;
+}
+.s-sidecontent{
+    width: 100%;
+    height: calc(100vh - 70px);
+    overflow: auto;
+}
+.s-sidecontent::-webkit-scrollbar{
+    display: none;
+}
+.all-shops{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+.all-shops>h2{
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.466);
+}
+.all-shops>table{
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.456);
+    border-collapse: collapse;
+}
+th, td{
+    padding: 10px;
+    /* background-color: red; */
+    border: 1px solid rgba(255, 255, 255, 0.456);
+
+}
+.all-shops>table>tbody>tr>td:first-child{
+    text-align: center;
+}
+.all-shops>table>tbody>tr>td:last-child{
+    display: flex;
+    justify-content: center;
+}
+.t-btns{
+    display: flex;
+    gap: 10px;
+}
+.u-btn{
+    padding: 10px 20px;
+    background-color: blue;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.d-btn{
+    padding: 10px 20px;
+    background-color: red;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.a-btn{
+    padding: 10px 20px;
+    background-color: green;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 10px;
+}

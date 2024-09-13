@@ -50,6 +50,7 @@ const Navbar = ({ user, onLogout, alert, handleAlert }) => {
                       localStorage.removeItem('user');
                       onLogout();
                       handleAlert(res.data.message);
+                      nav('/');
                     } 
                     document.querySelector('.right-nav').style.left = "-100%";
                   }}>Logout</div>
@@ -58,11 +59,11 @@ const Navbar = ({ user, onLogout, alert, handleAlert }) => {
               {!user &&
                 <>
                   <div className="l-btn" onClick={() => {
-                    nav('/user/login');
+                    nav('/admin/login');
                     document.querySelector('.right-nav').style.left = "-100%"
                     }}>Login</div>
                   <div className="r-btn" onClick={() => { 
-                    nav('/user/register');
+                    nav('/admin/register');
                     document.querySelector('.right-nav').style.left = "-100%"
                   }}>Register</div>
                 </>

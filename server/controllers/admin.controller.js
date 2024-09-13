@@ -199,6 +199,65 @@ export const createShop = async (req, res) => {
         console.error(error);
     }
 }
+
+export const allShops = async (req, res) => {
+    try {
+        const shops = await shopModel.find();
+        if (shops) {
+            return res.json({
+                success: true,
+                message: "All shops fetched successfully",
+                allShops: shops
+            })
+        } else {
+            return res.json({
+                success: false,
+                message: "Unable to fetch shops",
+            })
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const deleteShop = async (req, res) => {
+    try {
+        const deleted = await shopModel.findByIdAndDelete(req.params.sId);
+        const shops = await shopModel.find();
+        if (deleted) {
+            return res.json({
+                success: true,
+                message: 'Shop deleted successfully',
+                allShops: shops
+            })
+        } else {
+            return res.json({
+                success: false,
+                message: 'Unable to delete shop'
+            })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updateShop = async(req, res)=>{
+    const updated = await shopModel.findOneAndUpdate({_id: req.body._id}, {$set: {...req.body}}, {new: true});
+    const shops = await shopModel.find();
+    if(updated){
+        return res.json({
+            success: true,
+            message: "Shop details updated.",
+            allShops: shops
+        })
+    }else{
+        return res.json({
+            success: false,
+            message: "Unable to update shop details."
+        })
+    }
+}
+
 export const createProduct = async (req, res) => {
     try {
         // find the shop from shop id

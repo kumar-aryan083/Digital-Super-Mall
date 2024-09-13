@@ -5,7 +5,7 @@ import { checkAdmin } from '../utils/setValues';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const DashHome = ({handleAlert}) => {
+const DashHome = ({handleAlert, user}) => {
   const [shop, setShop] = useState({
     shopName: "",
     category: "",
@@ -15,15 +15,10 @@ const DashHome = ({handleAlert}) => {
   const nav = useNavigate();
 
   useEffect(()=>{
-    findAdmin();
-  },[])
-
-  const findAdmin = async()=>{
-    const isAdmin = await checkAdmin();
-    if(!isAdmin){
+    if(!user){
       nav('/');
     }
-  }
+  },[])
 
   const handleShopChange = (e)=>{
     setShop({
