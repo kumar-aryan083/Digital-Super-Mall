@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import { useNavigate } from 'react-router-dom';
 import './styles/Shops.css'
 import axios from 'axios';
+// import { Editor } from '@tinymce/tinymce-react';
 
 const Shops = ({ user, handleAlert }) => {
+  const nav = useNavigate();
+  // const editorRef = useRef(null);
   const [shops, setShops] = useState(null);
   const [shop, setShop] = useState({
     shopName: "",
@@ -12,9 +15,15 @@ const Shops = ({ user, handleAlert }) => {
     floor: "",
     shopDesc: ""
   });
+  const [product, setProduct] = useState({
+    productName: "",
+    mrp: "",
+    specs: "",
+    quantity: "",
+    offerPerc: "",
+    productImg: ""
+  });
   
-  const nav = useNavigate();
-
   useEffect(() => {
     if (!user) {
       nav('/');
@@ -46,9 +55,23 @@ const Shops = ({ user, handleAlert }) => {
     if(res.data.success){
       setShops(res.data.allShops);
       handleAlert(res.data.message);
-      document.querySelector('.as-popup').style.display = 'none';
+      document.querySelector('.us-popup').style.display = 'none';
     }
   }
+
+  const handleAddProduct = async(e)=>{
+    e.preventDefault();
+    console.log(product);
+    document.querySelector('.ap-popup').style.display = 'none';
+  }
+
+  const handleProductChange = (e)=>{
+    setProduct({
+      ...product, 
+      [e.target.name]: e.target.value
+    })
+  }
+
 
   return (
     <>
@@ -79,7 +102,7 @@ const Shops = ({ user, handleAlert }) => {
                         <td>
                           <div className="t-btns">
                             <div className="u-btn" onClick={()=>{
-                              document.querySelector('.as-popup').style.display = 'flex';
+                              document.querySelector('.us-popup').style.display = 'flex';
                               setShop(shop);
                             }}>Update Shop</div>
                             <div className="d-btn" onClick={async()=>{
@@ -88,7 +111,9 @@ const Shops = ({ user, handleAlert }) => {
                                 setShops(res.data.allShops);
                               }
                             }}>Delete Shop</div>
-                            <div className="a-btn">Add Product</div>
+                            <div className="a-btn" onClick={()=>{
+                              document.querySelector('.ap-popup').style.display = 'flex';
+                            }}>Add Product</div>
                           </div>
                         </td>
                       </tr>
@@ -108,8 +133,8 @@ const Shops = ({ user, handleAlert }) => {
         </div>
       </div>
 
-      <div className="as-popup">
-        <div className="as-popup-card">
+      <div className="us-popup">
+        <div className="us-popup-card">
           <h2>Update Shop</h2>
           <form onSubmit={handleUpdateSubmit}>
             <input type="text" name='shopName' placeholder='Enter Shop name' value={shop.shopName} onChange={handleShopChange} />
@@ -132,7 +157,36 @@ const Shops = ({ user, handleAlert }) => {
             <input type="submit" value='Update Shop' />
           </form>
           <div className="close" onClick={()=>{
-            document.querySelector('.as-popup').style.display = 'none';
+            document.querySelector('.us-popup').style.display = 'none';
+          }}>X</div>
+        </div>
+      </div>
+
+      <div className="ap-popup">
+        <div className="ap-popup-card">
+          <h2>Add new product</h2>
+          <form onSubmit={handleAddProduct}>
+            <input type="text" name='productName' placeholder='Enter Product name' value={product.productName} onChange={handleProductChange} />
+            <input type="number" name='mrp' placeholder='Enter Product MRP' value={product.mrp} onChange={handleProductChange} />
+            <input type="number" name='offerPerc' placeholder='Enter Product Offer' value={product.offerPerc} onChange={handleProductChange} />
+            <input type="number" name='quantity' placeholder='Enter Product quantity' value={product.quantity} onChange={handleProductChange} />
+            <div className="img-inpt">
+              <input type="file" />
+            </div>
+            <textarea name="specs" id="specs" rows={15} cols={60} placeholder='Enter the specications of the product' value={product.specs} onChange={handleProductChange}></textarea>
+            {/* <Editor
+                    apiKey="guno0a8sli5ntftah9gajp399fnwk8ov8f4kud5pdk9sdnmd"
+                    onInit={(evt, editor) => editorRef.current = editor}
+                    init={{
+                        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+                        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                    }}
+                    initialValue="Remove this and enter product specification"
+                /> */}
+            <input type="submit" value='Add product' />
+          </form>
+          <div className="close" onClick={()=>{
+            document.querySelector('.ap-popup').style.display = 'none';
           }}>X</div>
         </div>
       </div>

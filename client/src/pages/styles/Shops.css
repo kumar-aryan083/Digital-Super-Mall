@@ -63,3 +63,124 @@ th, td{
     cursor: pointer;
     border-radius: 10px;
 }
+.us-popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.671);
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.us-popup-card{
+    background-color: rgb(197, 194, 194);
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+.us-popup-card>h2{
+    color: black;
+    text-align: center;
+}
+.us-popup-card>form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.us-popup-card>form>input{
+    padding: 10px 20px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+.us-popup-card>form>select{
+    padding: 10px 20px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+.us-popup-card>form>textarea{
+    outline: none;
+    padding: 10px;
+    resize: none;
+    border: none;
+}
+.us-popup-card>form>input:last-child{
+    background-color: rgb(2, 181, 2);
+    color: white;
+    font-weight: 550;
+    cursor: pointer;
+}
+.us-popup-card>form>input:last-child:hover{
+    background-color: rgb(7, 140, 7);
+}
+
+.ap-popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.671);
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.ap-popup-card{
+    background-color: rgb(197, 194, 194);
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+.ap-popup-card>h2{
+    color: black;
+    text-align: center;
+}
+.ap-popup-card>form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.ap-popup-card>form>input{
+    padding: 10px 20px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+.ap-popup-card>form>select{
+    padding: 10px 20px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+.ap-popup-card>form>textarea{
+    outline: none;
+    padding: 10px;
+    resize: none;
+    border: none;
+}
+.ap-popup-card>form>input:last-child{
+    background-color: rgb(2, 181, 2);
+    color: white;
+    font-weight: 550;
+    cursor: pointer;
+}
+.ap-popup-card>form>input:last-child:hover{
+    background-color: rgb(7, 140, 7);
+}
+
+.img-inpt{
+    border: 1px solid rgba(0, 0, 0, 0.129);
+    padding: 10px;
+    width: fit-content;
+    color: black;
+    border-radius: 10px;
+}
