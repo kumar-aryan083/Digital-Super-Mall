@@ -261,7 +261,7 @@ export const updateShop = async(req, res)=>{
 export const createProduct = async (req, res) => {
     try {
         // find the shop from shop id
-        const shop = await shopModel.findById(req.params.sId).populate('products');
+        const shop = await shopModel.findById(req.params.pId).populate('products');
         if (!shop) {
             return res.json({
                 success: false,
@@ -299,5 +299,62 @@ export const createProduct = async (req, res) => {
 
     } catch (error) {
         console.error(error);
+    }
+}
+export const allProducts = async(req, res)=>{
+    try {
+        // console.log('hit')
+        const products = await productModel.find();
+        if (products) {
+            return res.json({
+                success: true,
+                message: "All products fetched successfully",
+                allProducts: products
+            })
+        } else {
+            return res.json({
+                success: false,
+                message: "Unable to fetch products",
+            })
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const deleteProduct = async (req, res) => {
+    try {
+        const deleted = await productModel.findByIdAndDelete(req.params.pId);
+        const products = await productModel.find();
+        if (deleted) {
+            return res.json({
+                success: true,
+                message: 'Product deleted successfully',
+                allProducts: products
+            })
+        } else {
+            return res.json({
+                success: false,
+                message: 'Unable to delete product'
+            })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const updateProduct = async(req, res)=>{
+    const updated = await productModel.findOneAndUpdate({_id: req.body._id}, {$set: {...req.body}}, {new: true});
+    const products = await productModel.find();
+    if(updated){
+        return res.json({
+            success: true,
+            message: "Product details updated.",
+            allProducts: products
+        })
+    }else{
+        return res.json({
+            success: false,
+            message: "Unable to update product details."
+        })
     }
 }

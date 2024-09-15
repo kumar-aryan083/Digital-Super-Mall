@@ -45,7 +45,7 @@ const App = () => {
           <Route path='/user/login' element={<UserLogin handleAlert={settingAlert} onLogin={settingUser} user={user}/>} /> */}
           <Route path='/admin/dashboard' element={<DashHome handleAlert={settingAlert} user={user} />} />
           <Route path='/admin/dashboard/shops' element={<Shops user={user} handleAlert={settingAlert} />} />
-          <Route path='/admin/dashboard/products' element={<Products user={user} />} />
+          <Route path='/admin/dashboard/products' element={<Products user={user} handleAlert={settingAlert} />} />
         </Routes>
       </div>
     </>
