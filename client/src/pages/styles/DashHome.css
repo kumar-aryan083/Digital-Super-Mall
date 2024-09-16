@@ -149,3 +149,6 @@
     user-select: none;
     cursor: pointer;
 }
+#category{
+    text-transform: capitalize;
+}

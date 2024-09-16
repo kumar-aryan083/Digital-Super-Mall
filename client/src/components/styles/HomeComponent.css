@@ -7,7 +7,7 @@
 .u-home {
     width: fit-content;
     margin: 0 auto;
-    padding: 50px;
+    padding: 60px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -25,7 +25,10 @@
     color: rgb(190, 185, 185);
 }
 
-
+.l-home>div{
+    height: 100%;
+    padding-bottom: 30px;
+}
 
 .top-bar {
     display: flex;
@@ -66,3 +69,6 @@
     height: 250px;
 }
 
+.catName{
+    text-transform: capitalize;
+}

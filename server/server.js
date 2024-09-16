@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import adminRouter from './routers/admin.router.js'
 import commonRouter from './routers/common.router.js'
+import catRouter from './routers/category.router.js'
 
 env.config();
 const app = express();
@@ -28,6 +29,7 @@ app.use(cookieParser());
 app.use(cors(corsAllow));
 app.use('/api/admin', adminRouter);
 app.use('/api/common', commonRouter);
+app.use('/api/category', catRouter);
 
 app.get('/', (req, res)=>{
     res.send("server is running fine.")

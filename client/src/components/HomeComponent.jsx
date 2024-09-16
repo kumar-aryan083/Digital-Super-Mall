@@ -1,19 +1,32 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './styles/HomeComponent.css';
 import Cards from './Cards';
+import axios from 'axios';
 
 const HomeComponent = () => {
-  const cardsContainerRef = useRef(null); // Reference for the cards container
+  const cardsContainerRef = useRef([]); // Reference for the cards container
+  const [categories, setCategories] = useState(null);
 
-  const scrollLeft = () => {
-    cardsContainerRef.current.scrollBy({
+  useEffect(() => {
+    getCat();
+  }, [])
+
+  const getCat = async () => {
+    const res = await axios.get("http://localhost:9000/api/category/all-categories");
+    if (res.data.success) {
+      setCategories(res.data.categories);
+    }
+  }
+
+  const scrollLeft = (index) => {
+    cardsContainerRef.current[index].scrollBy({
       left: -330, // Scrolls 100px to the left
       behavior: 'smooth' // Smooth scrolling
     });
   };
 
-  const scrollRight = () => {
-    cardsContainerRef.current.scrollBy({
+  const scrollRight = (index) => {
+    cardsContainerRef.current[index].scrollBy({
       left: 330, // Scrolls 100px to the right
       behavior: 'smooth' // Smooth scrolling
     });
@@ -27,21 +40,37 @@ const HomeComponent = () => {
           <p>Explore the Feel of visiting super mall at home. This mall has vast range of shops, Please visit and find whatever you need at one place.</p>
         </div>
         <div className="l-home">
-          <div className="top-bar">
-            <div className="catName">
-              Electronics
-            </div>
-            <div className="h-line"></div>
-            <div className="c-btns">
-              <div className="left-btn" onClick={scrollLeft}>
-                <i class="fa-solid fa-arrow-left"></i>
-              </div>
-              <div className="right-btn" onClick={scrollRight}>
-                <i class="fa-solid fa-arrow-right"></i>
-              </div>
-            </div>
-          </div>
-          <Cards cardsContainerRef={cardsContainerRef} />
+          {
+            categories?.length > 0 ? (
+              <>
+                {
+                  categories.map((cat, index) => (
+                    <div key={cat._id}>
+                      <div className="top-bar" >
+                        <div className="catName">
+                          {cat?.catName}
+                        </div>
+                        <div className="h-line"></div>
+                        <div className="c-btns">
+                          <div className="left-btn" onClick={() => scrollLeft(index)}>
+                            <i className="fa-solid fa-arrow-left"></i>
+                          </div>
+                          <div className="right-btn" onClick={() => scrollRight(index)}>
+                            <i className="fa-solid fa-arrow-right"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <Cards key={cat._id} cardsContainerRef={(el) => (cardsContainerRef.current[index] = el)} />
+                    </div>
+                  ))
+                }
+              </>
+            ) : (
+              <>
+                <p>No Categories to show shop details</p>
+              </>
+            )
+          }
         </div>
       </div>
     </>

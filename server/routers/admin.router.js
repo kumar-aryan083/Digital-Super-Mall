@@ -12,7 +12,7 @@ router.get('/all-shops',verifyToken, allShops);
 router.delete('/delete-shop/:sId',verifyToken, deleteShop);
 router.put('/update-shop',verifyToken, updateShop);
 router.get('/all-products', allProducts);
-router.post('/create-product/:pId',verifyToken, createProduct);
+router.post('/create-product/:sId',verifyToken, createProduct);
 router.put('/update-product',verifyToken, updateProduct);
 router.delete('/delete-product/:pId',verifyToken, deleteProduct);
 

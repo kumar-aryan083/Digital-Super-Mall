@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const DashHome = ({handleAlert, user}) => {
+  const [categories, setCategories] = useState(null);
   const [shop, setShop] = useState({
     shopName: "",
     category: "",
@@ -18,7 +19,15 @@ const DashHome = ({handleAlert, user}) => {
     if(!user){
       nav('/');
     }
+    getCategories();
   },[])
+
+  const getCategories = async()=>{
+    const res = await axios.get("http://localhost:9000/api/category/all-categories");
+    if(res.data.success){
+      setCategories(res.data.categories);
+    }
+  }
 
   const handleShopChange = (e)=>{
     setShop({
@@ -90,10 +99,21 @@ const DashHome = ({handleAlert, user}) => {
             <input type="text" name='shopName' placeholder='Enter Shop name' value={shop.shopName} onChange={handleShopChange} />
             <select name="category" value={shop.category} onChange={handleShopChange} id="category">
               <option> Not Selected</option>
-              <option value="general"> General Store</option>
-              <option value="gaming"> Gaming Store</option>
-              <option value="electronic"> Electronic Store</option>
-              <option value="clothing"> Clothing Store</option>
+              {
+                categories?.length>0 ? (
+                  <>
+                  {
+                    categories.map((cat) => (
+                      <option value={cat?.catName} key={cat._id}>{cat?.catName}</option>
+                    ))
+                  }
+                  </>
+                ):(
+                  <>
+                    <option>No categories to show</option>
+                  </>
+                )
+              }
             </select>
             <select name="floor" value={shop.floor} onChange={handleShopChange} id="floor">
               <option> Not Selected</option>

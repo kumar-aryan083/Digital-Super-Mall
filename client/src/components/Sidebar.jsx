@@ -10,6 +10,7 @@ const Sidebar = () => {
             <Link to='/admin/dashboard'><li>Home</li></Link>
             <Link to='/admin/dashboard/shops'><li>Shops</li></Link>
             <Link to='/admin/dashboard/products'><li>Products</li></Link>
+            <Link to='/admin/dashboard/manage-category'><li>Manage Categories</li></Link>
         </ul>
       </div>
     </>

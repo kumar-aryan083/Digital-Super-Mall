@@ -11,6 +11,7 @@ import AdminLogin from './pages/AdminLogin';
 import UserRegister from './pages/UserRegister';
 import UserLogin from './pages/UserLogin';
 import DashHome from './pages/DashHome';
+import ManageCat from './components/ManageCat';
 
 const App = () => {
   const [user, setUser] = useState(()=>{
@@ -46,6 +47,7 @@ const App = () => {
           <Route path='/admin/dashboard' element={<DashHome handleAlert={settingAlert} user={user} />} />
           <Route path='/admin/dashboard/shops' element={<Shops user={user} handleAlert={settingAlert} />} />
           <Route path='/admin/dashboard/products' element={<Products user={user} handleAlert={settingAlert} />} />
+          <Route path='/admin/dashboard/manage-category' element={<ManageCat />} />
         </Routes>
       </div>
     </>

@@ -1,4 +1,5 @@
 import adminModel from "../models/admin.model.js";
+import categoryModel from "../models/category.model.js";
 import productModel from "../models/product.model.js";
 import shopModel from "../models/shop.model.js";
 import { comparePassword, hashPassword } from "../utils/hashing.js";
@@ -184,6 +185,11 @@ export const createShop = async (req, res) => {
                 const admin = await adminModel.findById(req.user.id);
                 admin.shopIds.push(newShop._id);
                 await admin.save();
+
+                const category = await categoryModel.findOne({catName: newShop.category});
+                category.shops.push(newShop._id);
+                await category.save();
+                
                 res.json({
                     success: true,
                     message: "New shop created."
@@ -223,6 +229,11 @@ export const allShops = async (req, res) => {
 export const deleteShop = async (req, res) => {
     try {
         const deleted = await shopModel.findByIdAndDelete(req.params.sId);
+
+        const admin = await adminModel.findOne({_id: req.user.id});
+        admin.shopIds.pull(deleted._id);
+        await admin.save();
+
         const shops = await shopModel.find();
         if (deleted) {
             return res.json({
@@ -261,7 +272,7 @@ export const updateShop = async(req, res)=>{
 export const createProduct = async (req, res) => {
     try {
         // find the shop from shop id
-        const shop = await shopModel.findById(req.params.pId).populate('products');
+        const shop = await shopModel.findById(req.params.sId).populate('products');
         if (!shop) {
             return res.json({
                 success: false,
@@ -279,6 +290,8 @@ export const createProduct = async (req, res) => {
         // create a new product if it's not present in the shop
         const newProduct = new productModel({ ...req.body, adminId: req.user.id, shopId: req.params.sId });
         await newProduct.save();
+
+
 
         if (newProduct) {
             // push this product to the shop model
@@ -326,6 +339,11 @@ export const deleteProduct = async (req, res) => {
     try {
         const deleted = await productModel.findByIdAndDelete(req.params.pId);
         const products = await productModel.find();
+
+        const shop = await shopModel.findOne({_id: deleted.shopId});
+        shop.products.pull(deleted._id);
+        await shop.save()
+
         if (deleted) {
             return res.json({
                 success: true,
