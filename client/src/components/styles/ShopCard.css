@@ -1,6 +1,6 @@
 .cards {
     height: 70%;
-    width: 100%;
+    width: 340px;
     padding: 10px;
     margin: auto 0;
     display: flex;
@@ -8,6 +8,8 @@
     justify-content: space-between;
     border: 1px solid rgba(255, 255, 255, 0.449);
     border-radius: 10px;
+    background-color: bisque;
+    color: black;
 }
 
 .cards-info {
@@ -22,8 +24,9 @@
 
 .rm-btn {
     padding: 8px 15px;
-    width: 50%;
+    width: 105px;
     background-color: green;
+    color: white;
     border-radius: 10px;
     user-select: none;
     cursor: pointer;

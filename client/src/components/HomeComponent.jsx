@@ -60,7 +60,7 @@ const HomeComponent = () => {
                           </div>
                         </div>
                       </div>
-                      <Cards key={cat._id} cardsContainerRef={(el) => (cardsContainerRef.current[index] = el)} />
+                      <Cards key={cat._id} cardsContainerRef={(el) => (cardsContainerRef.current[index] = el)} catId={cat._id} />
                     </div>
                   ))
                 }

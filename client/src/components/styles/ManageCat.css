@@ -1,0 +1,37 @@
+.full-m-cat{
+    display: flex;
+}
+.all-cats{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+.all-cats>div{
+    display: flex;
+    justify-content: space-between;
+}
+.all-cats>h2{
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.466);
+}
+.all-cats>table{
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.456);
+    border-collapse: collapse;
+}
+th, td{
+    padding: 10px;
+    /* background-color: red; */
+    border: 1px solid rgba(255, 255, 255, 0.456);
+    text-align: center;
+
+}
+.all-cats>table>tbody>tr>td:last-child{
+    display: flex;
+    justify-content: center;
+}
+.all-cats>table>tbody>tr>td{
+    text-transform: capitalize;
+}

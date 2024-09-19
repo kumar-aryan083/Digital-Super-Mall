@@ -1,84 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/Cards.css';
+import axios from 'axios';
+import ShopCard from './ShopCard';
 
-const Cards = ({cardsContainerRef}) => {
+const Cards = ({cardsContainerRef, catId}) => {
+  const [shops, setShops] = useState(null);
+
+  useEffect(()=>{
+    getShops();
+  }, [])
+
+  const getShops = async()=>{
+    const res = await axios.get(`http://localhost:9000/api/category/all-shops/${catId}`);
+    if(res.data.success){
+      console.log(res.data);
+      setShops(res.data.shops);
+    }
+  }
 
   return (
     <>
       <div className="all-cards" ref={cardsContainerRef}>  
-            <div className="cards">
-              <div className="cards-info">
-              <h3>Shop Name</h3>
-              <p>Shop description</p>
-              </div>
-              <div className="rm-btn">
-                Go to Shop
-              </div>
-            </div>
-            <div className="cards">
-              <div className="cards-info">
-              <h3>Shop Name</h3>
-              <p>Shop description</p>
-              </div>
-              <div className="rm-btn">
-                Go to Shop
-              </div>
-            </div>
-            <div className="cards">
-              <div className="cards-info">
-              <h3>Shop Name</h3>
-              <p>Shop description</p>
-              </div>
-              <div className="rm-btn">
-                Go to Shop
-              </div>
-            </div>
-            <div className="cards">
-              <div className="cards-info">
-              <h3>Shop Name</h3>
-              <p>Shop description</p>
-              </div>
-              <div className="rm-btn">
-                Go to Shop
-              </div>
-            </div>
-            <div className="cards">
-              <div className="cards-info">
-              <h3>Shop Name</h3>
-              <p>Shop description</p>
-              </div>
-              <div className="rm-btn">
-                Go to Shop
-              </div>
-            </div>
-            <div className="cards">
-              <div className="cards-info">
-              <h3>Shop Name</h3>
-              <p>Shop description</p>
-              </div>
-              <div className="rm-btn">
-                Go to Shop
-              </div>
-            </div>
-            <div className="cards">
-              <div className="cards-info">
-              <h3>Shop Name</h3>
-              <p>Shop description</p>
-              </div>
-              <div className="rm-btn">
-                Go to Shop
-              </div>
-            </div>
-            <div className="cards">
-              <div className="cards-info">
-              <h3>Shop Name</h3>
-              <p>Shop description</p>
-              </div>
-              <div className="rm-btn">
-                Go to Shop
-              </div>
-            </div>
-          </div>
+          <ShopCard shops={shops} />
+      </div>
     </>
   );
 }
