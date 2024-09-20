@@ -15,6 +15,7 @@ const Shops = ({ user, handleAlert }) => {
   const [id, setId] = useState(null);
   const [imgPerc, setImgPerc] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [categories, setCategories] = useState(null);
   const [shop, setShop] = useState({
     shopName: "",
     category: "",
@@ -29,22 +30,29 @@ const Shops = ({ user, handleAlert }) => {
     offerPerc: "",
     productImg: ""
   });
-
+  
   useEffect(() => {
     if (!user) {
       nav('/');
     }
     getData();
+    getCategories();
   }, [])
-
+  
   useEffect(() => {
     if (imgPerc === 100) {
-        setUploading(false);
+      setUploading(false);
     } else if (imgPerc > 0) {
-        setUploading(true);
+      setUploading(true);
     }
-}, [imgPerc]);
-
+  }, [imgPerc]);
+  
+  const getCategories = async()=>{
+    const res = await axios.get("http://localhost:9000/api/category/all-categories");
+    if(res.data.success){
+      setCategories(res.data.categories);
+    }
+  }
   const getData = async () => {
     const res = await axios.get('http://localhost:9000/api/admin/all-shops', { withCredentials: true });
     if (res.data.success) {
@@ -145,9 +153,9 @@ const Shops = ({ user, handleAlert }) => {
               <tbody>
                 {
                   shops?.length > 0 ? (
-                    shops.map((shop) => (
+                    shops.map((shop, index) => (
                       <tr key={shop._id}>
-                        <td>{shop.shopNumber}</td>
+                        <td>{index+1}</td>
                         <td>{shop.shopName}</td>
                         <td>{shop.category}</td>
                         <td>{truncateText(shop.shopDesc, 50)}</td>
@@ -193,10 +201,21 @@ const Shops = ({ user, handleAlert }) => {
             <input type="text" name='shopName' placeholder='Enter Shop name' value={shop.shopName} onChange={handleShopChange} />
             <select name="category" value={shop.category} onChange={handleShopChange} id="category">
               <option> Not Selected</option>
-              <option value="general"> General Store</option>
-              <option value="gaming"> Gaming Store</option>
-              <option value="electronic"> Electronic Store</option>
-              <option value="clothing"> Clothing Store</option>
+              {
+                categories?.length>0 ? (
+                  <>
+                  {
+                    categories.map((cat) => (
+                      <option value={cat?.catName} key={cat._id}>{cat?.catName}</option>
+                    ))
+                  }
+                  </>
+                ):(
+                  <>
+                    <option>No categories to show</option>
+                  </>
+                )
+              }
             </select>
             <select name="floor" value={shop.floor} onChange={handleShopChange} id="floor">
               <option> Not Selected</option>

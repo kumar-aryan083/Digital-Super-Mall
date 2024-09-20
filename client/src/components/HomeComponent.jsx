@@ -12,9 +12,10 @@ const HomeComponent = () => {
   }, [])
 
   const getCat = async () => {
-    const res = await axios.get("http://localhost:9000/api/category/all-categories");
+    const res = await axios.get("http://localhost:9000/api/home/get");
     if (res.data.success) {
-      setCategories(res.data.categories);
+      // console.log(res.data.homeRow[0].homeRow)
+      setCategories(res.data.homeRow[0].homeRow);
     }
   }
 
@@ -45,10 +46,10 @@ const HomeComponent = () => {
               <>
                 {
                   categories.map((cat, index) => (
-                    <div key={cat._id}>
+                    <div key={index}>
                       <div className="top-bar" >
                         <div className="catName">
-                          {cat?.catName}
+                          {cat}
                         </div>
                         <div className="h-line"></div>
                         <div className="c-btns">
@@ -60,7 +61,7 @@ const HomeComponent = () => {
                           </div>
                         </div>
                       </div>
-                      <Cards key={cat._id} cardsContainerRef={(el) => (cardsContainerRef.current[index] = el)} catId={cat._id} />
+                      <Cards key={index} cardsContainerRef={(el) => (cardsContainerRef.current[index] = el)} catName={cat} />
                     </div>
                   ))
                 }

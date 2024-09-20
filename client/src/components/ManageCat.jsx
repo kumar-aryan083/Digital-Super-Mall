@@ -25,7 +25,7 @@ const ManageCat = ({ handleAlert }) => {
 
   const handleCategorySubmit = async(e) => {
     e.preventDefault();
-    const res = await axios.post(`http://localhost:9000/api/category/create-category/${catName}`, {}, {withCredentials: true});
+    const res = await axios.post(`http://localhost:9000/api/category/create-category/${catName.toLowerCase()}`, {}, {withCredentials: true});
     if(res.data.success){
       setCategories((prevCat)=> [...prevCat, res.data.newCat]);
       handleAlert(res.data.message);
@@ -84,7 +84,7 @@ const ManageCat = ({ handleAlert }) => {
                               document.querySelector('.us-popup').style.display = 'flex';
                             }}>Update Category</div>
                             <div className="d-btn" onClick={async () => {
-                              const res = await axios.delete(`http://localhost:9000/api/category/delete-category/${cat._id}`);
+                              const res = await axios.delete(`http://localhost:9000/api/category/delete-category/${cat._id}`, {withCredentials: true});
                               if (res.data.success) {
                                 setCategories(prevCat => prevCat.filter((cat)=> cat._id!== res.data.deleted._id));
                                 handleAlert(res.data.message);
