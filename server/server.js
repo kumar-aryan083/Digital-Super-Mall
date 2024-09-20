@@ -7,6 +7,7 @@ import cors from 'cors';
 import adminRouter from './routers/admin.router.js'
 import commonRouter from './routers/common.router.js'
 import catRouter from './routers/category.router.js'
+import homeRouter from './routers/home.router.js'
 
 env.config();
 const app = express();
@@ -30,6 +31,7 @@ app.use(cors(corsAllow));
 app.use('/api/admin', adminRouter);
 app.use('/api/common', commonRouter);
 app.use('/api/category', catRouter);
+app.use('/api/home', homeRouter);
 
 app.get('/', (req, res)=>{
     res.send("server is running fine.")

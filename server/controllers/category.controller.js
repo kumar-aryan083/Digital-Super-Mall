@@ -51,7 +51,8 @@ export const createCat = async (req, res) => {
 
 export const allShops = async (req, res) => {
     try {
-        const category = await categoryModel.findOne({ _id: req.params.catId }).populate('shops');
+        console.log(req.params.catName);
+        const category = await categoryModel.findOne({ catName: req.params.catName }).populate('shops');
         const shops = category.shops;
         if (category) {
             return res.json({

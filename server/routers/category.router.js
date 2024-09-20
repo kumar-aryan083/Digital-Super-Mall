@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/all-categories', allCat);
 router.post('/create-category/:catName',verifyToken, createCat);
-router.get('/all-shops/:catId', allShops);
+router.get('/all-shops/:catName', allShops);
 router.delete('/delete-category/:catId', verifyToken, deleteCat);
 router.put('/update-category/:catId', verifyToken, updateCat);
 

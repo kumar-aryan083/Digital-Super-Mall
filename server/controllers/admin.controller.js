@@ -234,6 +234,10 @@ export const deleteShop = async (req, res) => {
         admin.shopIds.pull(deleted._id);
         await admin.save();
 
+        const cat = await categoryModel.findOne({catName: deleted.category});
+        cat.shops.pull(deleted._id);
+        await cat.save();
+
         const shops = await shopModel.find();
         if (deleted) {
             return res.json({
@@ -253,6 +257,17 @@ export const deleteShop = async (req, res) => {
 }
 
 export const updateShop = async(req, res)=>{
+    const shop = await shopModel.findOne({_id: req.body._id});
+    // console.log(shop);
+    if(shop.category !== req.body.category){
+        const cat = await categoryModel.findOne({catName: shop.category});
+        cat.shops.pull(shop._id);
+        await cat.save();
+        const newCat = await categoryModel.findOne({catName: req.body.category});
+        newCat.shops.push(req.body._id);
+        await newCat.save();
+    }
+
     const updated = await shopModel.findOneAndUpdate({_id: req.body._id}, {$set: {...req.body}}, {new: true});
     const shops = await shopModel.find();
     if(updated){
